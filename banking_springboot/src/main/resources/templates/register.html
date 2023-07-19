@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Register form</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+	<link rel="stylesheet" href="/assets/css/register.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body>
+	<div>
+		<div id="login-box">
+			<div class="left">
+				<h1>SIGN UP</h1>
+				<input type="text"  id="userName" name="username" placeholder="Username"/>
+				<input type="text" id="email" name="email" placeholder="E-mail" />
+				<input type="password" id="password" name="password" placeholder="Password" />
+				<input type="password" id="rePassword" name="password2" placeholder="Retype password" />
+
+				<input type="button" id="btnSignUp" name="signup_submit" value="Sign me up" />
+				<a href="login">Come back login</a>
+			</div>
+
+			<div class="right">
+				<span class="loginwith">Sign in with<br />social network</span>
+
+				<button class="social-signin facebook"><i class="fab fa-facebook"></i> Log in with facebook</button>
+				<button class="social-signin twitter"><i class="fab fa-twitter"></i> Log in with Twitter</button>
+				<button class="social-signin google"><i class="fab fa-google-plus-g"></i> Log in with Google+</button>
+			</div>
+			<div class="or">OR</div>
+		</div>
+	</div>
+
+	<script>
+
+		const userName = $('#userName');
+		const password = $('#password');
+		const rePassword = $('#rePassword');
+		const btnSignUp = $('#btnSignUp');
+
+		btnSignUp.on('click', () => {
+			const obj = {
+				username: userName.val(),
+				password: password.val(),
+			}
+
+			$.ajax({
+				headers: {
+					'accept': 'application/json',
+					'content-type': 'application/json'
+				},
+				type: 'POST',
+				url: 'http://localhost:28001/api/auth/register',
+				data: JSON.stringify(obj)
+			})
+					.done(() => {
+						Swal.fire({
+							position: 'center',
+							icon: 'success',
+							title: 'Đăng ký thành công',
+							showConfirmButton: false,
+							timer: 1000
+						})
+					})
+					.fail((jqXHR) => {
+						console.log(jqXHR);
+					})
+		})
+
+	</script>
+
+</body>
+
+</html>

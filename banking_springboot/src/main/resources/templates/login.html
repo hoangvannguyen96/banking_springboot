@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login form</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <link rel="stylesheet" href="/assets/css/login.css">
+</head>
+<body>
+<div>
+    <div class="container">
+        <header>LOGIN</header>
+        <form>
+            <div class="input-field">
+                <input type="text" id="username" required>
+                <label>Username</label>
+            </div>
+            <div class="input-field">
+                <input class="pswrd" id="password" type="password" required>
+                <span class="show">SHOW</span>
+                <label>Password</label>
+            </div>
+            <div class="button">
+                <div class="inner"></div>
+                <button type="button" id="btnLogin">LOGIN</button>
+            </div>
+        </form>
+        <div class="auth">
+            Or login with
+        </div>
+        <div class="links">
+            <div class="facebook">
+                <i class="fab fa-facebook-square"><span>Facebook</span></i>
+            </div>
+            <div class="google">
+                <i class="fab fa-google-plus-square"><span>Google</span></i>
+            </div>
+        </div>
+        <div class="signup">
+            Not a member? <a href="register">Signup now</a>
+        </div>
+    </div>
+</div>
+
+<script src="/assets/js/login.js"></script>
+
+<script>
+    const username = $('#username');
+    const password = $('#password');
+    const btnLogin = $('#btnLogin');
+
+    btnLogin.on('click', () => {
+        const obj = {
+            username: username.val(),
+            password: password.val(),
+        }
+
+        $.ajax({
+            headers: {
+                'accept': 'application/json',
+                'content-type': 'application/json'
+            },
+            type: 'POST',
+            url: 'http://localhost:28001/api/auth/login',
+            data: JSON.stringify(obj)
+        })
+            .done(() => {
+                location.href = "/customers";
+            })
+            .fail((jqXHR) => {
+                console.log(jqXHR);
+            })
+    })
+
+</script>
+</body>
+
+</html>
